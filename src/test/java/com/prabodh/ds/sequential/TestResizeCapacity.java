@@ -1,6 +1,4 @@
-package com.prabodh.ds.associative;
-
-import com.prabodh.ds.sequential.MyDynamicArray;
+package com.prabodh.ds.sequential;
 
 public class TestResizeCapacity {
     public static void main(String[] arg) {

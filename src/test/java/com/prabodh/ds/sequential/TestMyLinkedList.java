@@ -1,6 +1,5 @@
-package com.prabodh.ds.associative;
+package com.prabodh.ds.sequential;
 
-import com.prabodh.ds.sequential.MyLinkedList;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
