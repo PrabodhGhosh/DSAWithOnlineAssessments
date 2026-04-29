@@ -36,7 +36,7 @@ public class MyLinkedList {
                 current=current.next; // Follow the pointer
             }
             current.next = newNode; // Re-point the last node to the new node
-        }
+          }
         size++;
 
     }
