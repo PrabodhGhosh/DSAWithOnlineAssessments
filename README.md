@@ -1,6 +1,6 @@
 # 🚀 DSA and System Design Lab
 
-This repository is my personal laboratory for mastering Data Structures, Algorithms, and System Design patterns.
+This repository is my personal laboratory for mastering Data Structures, Algorithms, and System Design patterns. 
 
 ## 🏗 The Build-Analyze-Apply Methodology
 
@@ -19,8 +19,8 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 | :--- | :--- | :--- | :--- |
 | **Dynamic Array** | ✅ Built | Doubling resize strategy | Add: $O(1)$ |
 | **LinkedList** | ⏳ Pending | - | - |
-| **Stack** | ⏳ Pending | - | - |
-| **Queue** | ⏳ Pending | - | - |
+| **Stack** | ✅ Built | Array-based (resize) | Push/Pop: $O(1)$ |
+| **Queue** | ⏳ Pending | Circular Buffer logic | - |
 
 ### 2. Associative Structures
 | Structure | Status | Notes |
@@ -42,6 +42,7 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 | **Dynamic Array** | Search | $O(N)$ | General storage |
 | **Dynamic Array** | Access | $O(1)$ | Random retrieval |
 | **Dynamic Array** | Add (resize)| $O(1)$ | Amortized growth |
+| **Stack** | Push / Pop | $O(1)$ | LIFO, Undo/Redo, Parsing |
 
 ---
 
@@ -51,6 +52,7 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 DSAWithOnlineAssessments/
 ├── src/main/java/com/prabodh/
 │   ├── ds/           # Custom implementations (The "Build")
+│   │   ├── sequential/ # Arrays, Stacks, Queues
 │   ├── patterns/     # Algorithmic logic (The "Analyze")
 │   └── challenges/   # LeetCode/OA Practice (The "Apply")
 └── src/test/java/com/prabodh/
