@@ -1,6 +1,7 @@
 # 🚀 DSA and System Design Lab
+![Build Status](https://github.com/prabodh-ghosh/DSAWithOnlineAssessments/actions/workflows/main.yml/badge.svg)
 
-This repository is my personal laboratory for mastering Data Structures, Algorithms, and System Design patterns. 
+This repository is my personal laboratory for mastering Data Structures, Algorithms, and System Design patterns.
 
 ## 🏗 The Build-Analyze-Apply Methodology
 
@@ -18,7 +19,7 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 | Structure | Status | Implementation Notes | Complexity (Amortized) |
 | :--- | :--- | :--- | :--- |
 | **Dynamic Array** | ✅ Built | Doubling resize strategy | Add: $O(1)$ |
-| **LinkedList** | ⏳ Pending | - | - |
+| **LinkedList** | ✅ Built | Head/Tail management | Append: $O(1)$, Insert: $O(N)$ |
 | **Stack** | ✅ Built | Array-based (resize) | Push/Pop: $O(1)$ |
 | **Queue** | ⏳ Pending | Circular Buffer logic | - |
 
@@ -42,7 +43,9 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 | **Dynamic Array** | Search | $O(N)$ | General storage |
 | **Dynamic Array** | Access | $O(1)$ | Random retrieval |
 | **Dynamic Array** | Add (resize)| $O(1)$ | Amortized growth |
-| **Stack** | Push / Pop | $O(1)$ | LIFO, Undo/Redo, Parsing |
+| **Stack** | Push / Pop | $O(1)$ | LIFO, Undo/Redo |
+| **LinkedList** | Append | $O(1)$ | Frequent Insert/Delete |
+| **LinkedList** | Access | $O(N)$ | Sequential traversal |
 
 ---
 
@@ -50,9 +53,9 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 
 ```text
 DSAWithOnlineAssessments/
+├── .github/workflows/  # CI/CD pipelines (GitHub Actions)
 ├── src/main/java/com/prabodh/
-│   ├── ds/           # Custom implementations (The "Build")
-│   │   ├── sequential/ # Arrays, Stacks, Queues
-│   ├── patterns/     # Algorithmic logic (The "Analyze")
-│   └── challenges/   # LeetCode/OA Practice (The "Apply")
+│   ├── ds/           # Custom implementations
+│   ├── patterns/     # Algorithmic logic
+│   └── challenges/   # LeetCode/OA Practice
 └── src/test/java/com/prabodh/
