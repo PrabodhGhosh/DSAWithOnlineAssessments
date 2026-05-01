@@ -17,7 +17,10 @@ public class MyDynamicArray {
      */
     public void add(int element) {
 
-        if (size == capacity) resize();
+        if (size == capacity)
+        {
+            resize();
+        }
 
         arr[size] = element;
         size++;

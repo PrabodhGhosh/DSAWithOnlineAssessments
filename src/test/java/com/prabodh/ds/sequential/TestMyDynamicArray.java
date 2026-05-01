@@ -1,6 +1,6 @@
 package com.prabodh.ds.sequential;
 
-public class TestResizeCapacity {
+public class TestMyDynamicArray {
     public static void main(String[] arg) {
 
         MyDynamicArray dynamicArray = new MyDynamicArray(2);
