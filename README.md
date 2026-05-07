@@ -21,7 +21,7 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 | **Dynamic Array** | ✅ Built | Doubling resize strategy | Add: $O(1)$ |
 | **LinkedList** | ✅ Built | Head/Tail management | Append: $O(1)$, Insert: $O(N)$ |
 | **Stack** | ✅ Built | Array-based (resize) | Push/Pop: $O(1)$ |
-| **Queue** | ⏳ Pending | Circular Buffer logic | - |
+| **Queue** | ✅ Built | Circular Buffer (Modulo math) | Enqueue/Dequeue: $O(1)$ |
 
 ### 2. Associative Structures
 | Structure | Status | Notes |
