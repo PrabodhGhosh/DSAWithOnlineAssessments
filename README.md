@@ -24,17 +24,31 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 ### 2. Algorithmic Patterns (OA Strategy)
 | Pattern | Status | Description | Problems Solved |
 | :--- | :--- | :--- | :--- |
-| **Two Pointers** | 🏃 In Progress | Using two indices to traverse from ends to middle or at different speeds. Reduces $O(N^2)$ to $O(N)$. | `TwoSum II`, `Valid Palindrome` |
-| **Sliding Window** | ⏳ Pending | Maintaining a subset of data within a range to track running metrics. | - |
-| **Fast & Slow** | ⏳ Pending | "Tortoise and Hare" approach for cycle detection and mid-point finding. | - |
+| **Two Pointers** | ✅ Built | Bi-directional traversal to reduce complexity from $O(N^2)$ to $O(N)$. | `TwoSum II`, `Valid Palindrome` |
+| **Fast & Slow** | ✅ Built | "Tortoise and Hare" strategy for cycle detection and midpoint discovery. | `Linked List Cycle II`, `Happy Number` |
+| **Sliding Window** | ⏳ Pending | Maintaining a data subset window to track running metrics. | - |
 
 ---
 
 ## 🧠 Pattern Deep Dive
 
-### Two Pointers (Meeting in the Middle)
-This pattern is used on **sorted** arrays or strings to find pairs or symmetries. By moving pointers from the `begin` and `end` towards the center, we eliminate unnecessary comparisons, effectively optimizing time complexity from **$O(N^2)$** to **$O(N)$**.
+### 1. Two Pointers (Meeting in the Middle)
+Used on **sorted** structures to find pairs or symmetries. By moving pointers from both ends toward the center, we eliminate entire branches of unnecessary comparisons.
 * **Key Logic**: If `sum > target`, move `end--`. If `sum < target`, move `begin++`.
+
+### 2. Fast & Slow Pointers (The Tortoise and the Hare)
+This pattern uses two pointers moving at different speeds (usually 1 step vs 2 steps). It is the gold standard for detecting cycles in linked structures or finding midpoints in $O(N)$ time with $O(1)$ space.
+
+#### **Cycle Entry Point Discovery**
+In a "Lollipop" shaped list (Linear path leading into a circle), we use a two-phase approach:
+1. **Phase 1**: Both pointers start at `head`. If they meet, a cycle exists.
+2. **Phase 2**: Reset `fast` to `head`. Move both at a 1:1 speed. They are mathematically guaranteed to meet at the **Start of the Cycle**.
+* **Mathematical Proof**: $L_1$ (distance to cycle) is equivalent to the distance from the meeting point back to the cycle start.
+
+
+
+#### **The "Hidden" Pattern: Happy Number**
+The pattern extends beyond Linked Lists. In numerical problems like "Happy Number," the "next" pointer is the result of a function (sum of squares of digits). If the sequence enters a loop that doesn't include 1, the Fast/Slow pointers will collide, signaling a "Not Happy" state.
 
 ---
 
@@ -42,10 +56,10 @@ This pattern is used on **sorted** arrays or strings to find pairs or symmetries
 
 | Category | Operation | Time Complexity | Best Use Case |
 | :--- | :--- | :--- | :--- |
+| **Cycle Detection**| Fast & Slow | $O(N)$ Time / $O(1)$ Space | Detecting infinite loops |
+| **Find Middle** | Fast & Slow | $O(N)$ Time / $O(1)$ Space | Merge Sort on LinkedList |
 | **Dynamic Array** | Access | $O(1)$ | Random retrieval |
 | **Stack** | Push / Pop | $O(1)$ | LIFO, DFS, Undo/Redo |
-| **Queue** | Enqueue / Dequeue | $O(1)$ | FIFO, BFS, Buffering |
-| **LinkedList** | Insert (Head/Tail) | $O(1)$ | Frequent growth/shrink |
 
 ---
 
