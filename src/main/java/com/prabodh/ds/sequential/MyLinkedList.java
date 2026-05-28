@@ -3,9 +3,9 @@ package com.prabodh.ds.sequential;
 public class MyLinkedList {
 
     // 1. Encapsulate the Node
-    private class Node{
+    public class Node{
         int data;
-        Node next;
+        public Node next;
 
         Node(int data)
         {
