@@ -26,7 +26,7 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 | :--- | :--- | :--- | :--- |
 | **Two Pointers** | ✅ Built | Bi-directional traversal to reduce complexity from $O(N^2)$ to $O(N)$. | `TwoSum II`, `Valid Palindrome` |
 | **Fast & Slow** | ✅ Built | "Tortoise and Hare" strategy for cycle detection and midpoint discovery. | `Linked List Cycle II`, `Happy Number` |
-| **Sliding Window** | ⏳ Pending | Maintaining a data subset window to track running metrics. | - |
+| **Sliding Window** | 🏃 In Progress | Maintaining a running subset loop over continuous data elements. | `MaxSumSubarrayFixed`, `FindAnagramsFixed`, `MinSizeSubarraySumVariable` |
 
 ---
 
@@ -45,31 +45,26 @@ In a "Lollipop" shaped list (Linear path leading into a circle), we use a two-ph
 2. **Phase 2**: Reset `fast` to `head`. Move both at a 1:1 speed. They are mathematically guaranteed to meet at the **Start of the Cycle**.
 * **Mathematical Proof**: $L_1$ (distance to cycle) is equivalent to the distance from the meeting point back to the cycle start.
 
-
-
 #### **The "Hidden" Pattern: Happy Number**
 The pattern extends beyond Linked Lists. In numerical problems like "Happy Number," the "next" pointer is the result of a function (sum of squares of digits). If the sequence enters a loop that doesn't include 1, the Fast/Slow pointers will collide, signaling a "Not Happy" state.
+
+### 3. Sliding Window (Resource Reuse Optimization)
+Used to optimize performance when evaluating continuous subarrays or substrings. Instead of scanning nested bounds from scratch, it transitions a tracking frame across elements, reusing calculated historical data to reduce complexity from $O(N^2)$ to $O(N)$.
+
+#### **Fixed-Size Windows**
+The boundaries of the frame maintain a static length `K`. 
+* **Mechanics**: Construct the initial state up to index `K - 1`. Then slide the window step-by-step by adding the incoming element at the right edge and subtracting the discarded element falling off the left edge (`i - k`).
+* **Applied Focus**: Tracking aggregate values or stable string patterns without repetitive evaluations (e.g., `FindAnagramsFixed` leveraging a static `int[26]` frequency map).
+
+#### **Variable-Size Windows (Elastic Bounds)**
+The window extends and retracts dynamically like an accordion based on constraint thresholds.
+* **Mechanics**: Expand the window continuously via a `right` pointer to collect elements. The moment the required constraint is reached or breached, a `while` loop forces the `left` pointer to contract the window to locate an optimal minimum or maximum bound.
+* **Defensive Practice**: Always catch the "unmet criteria" edge case using a ternary initialization fallback (`minLength == Integer.MAX_VALUE ? 0 : minLength`) to protect against dirty return data.
 
 ---
 
 ## 📉 Architect's Complexity Cheat Sheet
 
-| Category | Operation | Time Complexity | Best Use Case |
-| :--- | :--- | :--- | :--- |
-| **Cycle Detection**| Fast & Slow | $O(N)$ Time / $O(1)$ Space | Detecting infinite loops |
-| **Find Middle** | Fast & Slow | $O(N)$ Time / $O(1)$ Space | Merge Sort on LinkedList |
-| **Dynamic Array** | Access | $O(1)$ | Random retrieval |
-| **Stack** | Push / Pop | $O(1)$ | LIFO, DFS, Undo/Redo |
-
----
-
-## 📁 Repository Structure
-
-```text
-DSAWithOnlineAssessments/
-├── .github/workflows/  # CI/CD pipelines (GitHub Actions)
-├── src/main/java/com/prabodh/
-│   ├── ds/             # Custom implementations (The "Build")
-│   ├── patterns/       # Algorithmic logic (The "Analyze")
-│   └── challenges/     # LeetCode/OA Practice (The "Apply")
-└── src/test/java/com/prabodh/
+| Category | Operation / Pattern | Time Complexity | Space Complexity | Best Use Case |
+| :--- | :--- | :--- | :--- | :--- |
+| **Cycle Detection**| Fast & Slow | $O(N)$ | $
