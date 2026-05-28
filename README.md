@@ -27,6 +27,10 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 | **Two Pointers** | ✅ Built | Bi-directional traversal to reduce complexity from $O(N^2)$ to $O(N)$. | `TwoSum II`, `Valid Palindrome` |
 | **Fast & Slow** | ✅ Built | "Tortoise and Hare" strategy for cycle detection and midpoint discovery. | `Linked List Cycle II`, `Happy Number` |
 | **Sliding Window** | ✅ Built | Maintaining a running subset loop over continuous data elements. | `MaxSumSubarrayFixed`, `FindAnagramsFixed`, `MinSizeSubarraySumVariable`, `LongestSubstringUniqueVariable`, `LongestSubstringKDistinct` |
+| **Prefix Sums** | ⏳ Pending | Precomputing cumulative running metrics to answer range queries in constant time. | - |
+| **Monotonic Stack** | ⏳ Pending | Enforcing a strict directional sort order inside a stack frame to map nearest properties. | - |
+| **Merge Intervals** | ⏳ Pending | Sorting and consolidating overlapping coordinates or timeline tracks. | - |
+| **Matrix Traversal** | ⏳ Pending | Controlling boundary variables to navigate multi-dimensional index coordinates. | - |
 
 ---
 
@@ -60,4 +64,34 @@ The boundaries of the frame maintain a static length `K`.
 The window extends and retracts dynamically like an accordion based on constraint thresholds to establish optimal boundaries.
 * **Numeric Optimization**: Expand the window continuously via a `right` pointer to collect elements. When the constraint threshold is breached, a `while` loop forces the `left` pointer to contract the window (e.g., `MinSizeSubarraySumVariable`). Always catch the "unmet criteria" edge case using a ternary initialization fallback (`minLength == Integer.MAX_VALUE ? 0 : minLength`) to protect against dirty return data.
 * **State / Structural Optimization**: When tracking character properties like uniqueness (e.g., `LongestSubstringUniqueVariable`), pair the elastic window with a highly performant, constant-space ASCII frequency tracker array (`int[128]`). When a character frequency passes `1`, contract the `left` boundary to drop elements until the uniqueness invariant is restored.
-* **Multi-Variable Constraint Tracking**: Advanced variations require controlling distinct key cardinality thresholds (e.g., `LongestSubstringKDistinct`). Here, tracking a primitive state counter (`distinctCount`) derived from zero-to-one transformations inside the index layout ensures $O(1)$ state evaluations. The window contracts only when the unique key collection breaches the limit, running execution
+* **Multi-Variable Constraint Tracking**: Advanced variations require controlling distinct key cardinality thresholds (e.g., `LongestSubstringKDistinct`). Here, tracking a primitive state counter (`distinctCount`) derived from zero-to-one transformations inside the index layout ensures $O(1)$ state evaluations. The window contracts only when the unique key collection breaches the limit, running execution drops until explicit elements are completely evicted (`charCounts[leftChar] == 0`).
+
+---
+
+## 📉 Architect's Complexity Cheat Sheet
+
+| Category | Operation / Pattern | Time Complexity | Space Complexity | Best Use Case |
+| :--- | :--- | :--- | :--- | :--- |
+| **Cycle Detection**| Fast & Slow | $O(N)$ | $O(1)$ | Circular verification / Infinite loops |
+| **Find Middle** | Fast & Slow | $O(N)$ | $O(1)$ | Merge Sort splits on Linked lists |
+| **Fixed Range** | Sliding Window (Fixed) | $O(N)$ | $O(1)$ / $O(K)$ | Moving metrics / Anagram tracking |
+| **Dynamic Range**| Sliding Window (Variable) | $O(N)$ | $O(1)$ | Shortest/Longest bounds search |
+| **Range Queries** | Prefix Sums | $O(1)$ (Post-compute)| $O(N)$ | Immutable range total operations |
+| **Nearest Trend** | Monotonic Stack | $O(N)$ | $O(N)$ | Finding structural spikes or drops |
+| **Scheduling** | Merge Intervals | $O(N \log N)$ | $O(N)$ or $O(1)$ | Consolidating overlaps / Calendering |
+| **Coordinate Grid**| Matrix Traversal | $O(M \times N)$ | $O(1)$ | Spiral loops / Layered image processing |
+| **Dynamic Array** | Access | $O(1)$ | $O(1)$ | Fast random retrieval |
+| **Stack** | Push / Pop | $O(1)$ | $O(1)$ | LIFO tracking / Undo-Redo engines |
+
+---
+
+## 📁 Repository Structure
+
+```text
+DSAWithOnlineAssessments/
+├── .github/workflows/  # CI/CD pipelines (GitHub Actions)
+├── src/main/java/com/prabodh/
+│   ├── ds/             # Custom implementations (The "Build")
+│   ├── patterns/       # Algorithmic logic (The "Analyze")
+│   └── challenges/     # LeetCode/OA Practice (The "Apply")
+└── src/test/java/com/prabodh/
