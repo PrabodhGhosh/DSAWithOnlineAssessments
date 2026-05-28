@@ -26,7 +26,7 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 | :--- | :--- | :--- | :--- |
 | **Two Pointers** | ✅ Built | Bi-directional traversal to reduce complexity from $O(N^2)$ to $O(N)$. | `TwoSum II`, `Valid Palindrome` |
 | **Fast & Slow** | ✅ Built | "Tortoise and Hare" strategy for cycle detection and midpoint discovery. | `Linked List Cycle II`, `Happy Number` |
-| **Sliding Window** | 🏃 In Progress | Maintaining a running subset loop over continuous data elements. | `MaxSumSubarrayFixed`, `FindAnagramsFixed`, `MinSizeSubarraySumVariable` |
+| **Sliding Window** | 🏃 In Progress | Maintaining a running subset loop over continuous data elements. | `MaxSumSubarrayFixed`, `FindAnagramsFixed`, `MinSizeSubarraySumVariable`, `LongestSubstringUniqueVariable` |
 
 ---
 
@@ -57,14 +57,5 @@ The boundaries of the frame maintain a static length `K`.
 * **Applied Focus**: Tracking aggregate values or stable string patterns without repetitive evaluations (e.g., `FindAnagramsFixed` leveraging a static `int[26]` frequency map).
 
 #### **Variable-Size Windows (Elastic Bounds)**
-The window extends and retracts dynamically like an accordion based on constraint thresholds.
-* **Mechanics**: Expand the window continuously via a `right` pointer to collect elements. The moment the required constraint is reached or breached, a `while` loop forces the `left` pointer to contract the window to locate an optimal minimum or maximum bound.
-* **Defensive Practice**: Always catch the "unmet criteria" edge case using a ternary initialization fallback (`minLength == Integer.MAX_VALUE ? 0 : minLength`) to protect against dirty return data.
-
----
-
-## 📉 Architect's Complexity Cheat Sheet
-
-| Category | Operation / Pattern | Time Complexity | Space Complexity | Best Use Case |
-| :--- | :--- | :--- | :--- | :--- |
-| **Cycle Detection**| Fast & Slow | $O(N)$ | $
+The window extends and retracts dynamically like an accordion based on constraint thresholds to establish optimal boundaries.
+* **Numeric Optimization**: Expand the window continuously via a `right` pointer to collect elements. When the constraint threshold is breached, a `while` loop forces the `left` pointer to contract the window (e.g., `MinSizeSubarraySumVariable`). Always catch the "unmet
