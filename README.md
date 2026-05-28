@@ -26,7 +26,7 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 | :--- | :--- | :--- | :--- |
 | **Two Pointers** | ✅ Built | Bi-directional traversal to reduce complexity from $O(N^2)$ to $O(N)$. | `TwoSum II`, `Valid Palindrome` |
 | **Fast & Slow** | ✅ Built | "Tortoise and Hare" strategy for cycle detection and midpoint discovery. | `Linked List Cycle II`, `Happy Number` |
-| **Sliding Window** | 🏃 In Progress | Maintaining a running subset loop over continuous data elements. | `MaxSumSubarrayFixed`, `FindAnagramsFixed`, `MinSizeSubarraySumVariable`, `LongestSubstringUniqueVariable` |
+| **Sliding Window** | ✅ Built | Maintaining a running subset loop over continuous data elements. | `MaxSumSubarrayFixed`, `FindAnagramsFixed`, `MinSizeSubarraySumVariable`, `LongestSubstringUniqueVariable`, `LongestSubstringKDistinct` |
 
 ---
 
@@ -58,4 +58,6 @@ The boundaries of the frame maintain a static length `K`.
 
 #### **Variable-Size Windows (Elastic Bounds)**
 The window extends and retracts dynamically like an accordion based on constraint thresholds to establish optimal boundaries.
-* **Numeric Optimization**: Expand the window continuously via a `right` pointer to collect elements. When the constraint threshold is breached, a `while` loop forces the `left` pointer to contract the window (e.g., `MinSizeSubarraySumVariable`). Always catch the "unmet
+* **Numeric Optimization**: Expand the window continuously via a `right` pointer to collect elements. When the constraint threshold is breached, a `while` loop forces the `left` pointer to contract the window (e.g., `MinSizeSubarraySumVariable`). Always catch the "unmet criteria" edge case using a ternary initialization fallback (`minLength == Integer.MAX_VALUE ? 0 : minLength`) to protect against dirty return data.
+* **State / Structural Optimization**: When tracking character properties like uniqueness (e.g., `LongestSubstringUniqueVariable`), pair the elastic window with a highly performant, constant-space ASCII frequency tracker array (`int[128]`). When a character frequency passes `1`, contract the `left` boundary to drop elements until the uniqueness invariant is restored.
+* **Multi-Variable Constraint Tracking**: Advanced variations require controlling distinct key cardinality thresholds (e.g., `LongestSubstringKDistinct`). Here, tracking a primitive state counter (`distinctCount`) derived from zero-to-one transformations inside the index layout ensures $O(1)$ state evaluations. The window contracts only when the unique key collection breaches the limit, running execution
