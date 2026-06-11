@@ -56,7 +56,7 @@ The pattern extends beyond Linked Lists. In numerical problems like "Happy Numbe
 Used to optimize performance when evaluating continuous subarrays or substrings. Instead of scanning nested bounds from scratch, it transitions a tracking frame across elements, reusing calculated historical data to reduce complexity from $O(N^2)$ to $O(N)$.
 
 #### **Fixed-Size Windows**
-The boundaries of the frame maintain a static length `K`.
+The boundaries of the frame maintain a static length `K`. 
 * **Mechanics**: Construct the initial state up to index `K - 1`. Then slide the window step-by-step by adding the incoming element at the right edge and subtracting the discarded element falling off the left edge (`i - k`).
 * **Applied Focus**: Tracking aggregate values or stable string patterns without repetitive evaluations (e.g., `FindAnagramsFixed` leveraging a static `int[26]` frequency map).
 
@@ -73,9 +73,53 @@ Used to precompute values across linear sequences to convert nested scan ranges 
 By converting an input array into a cumulative running total layout of size `N + 1`, any range query between indices `left` and `right` can be resolved in $O(1)$ via simple boundary subtraction: `prefixSums[right + 1] - prefixSums[left]`. Allocating the structural length to `N + 1` seeds index 0 with a `0` value, entirely eliminating conditional branch checking for range evaluations originating at the absolute start of the array.
 
 #### **Historical State Lookbacks (The Map Integration)**
-When a linear layout includes zero or negative values, dynamic sliding bounds break. To handle aggregate constraint metrics like identifying continuous slices that sum to a target $K$ (`SubarraySumEqualsKPrefixSum`), we combine the cumulative total with a frequency tracking `HashMap`.
+When a linear layout includes zero or negative values, dynamic sliding bounds break. To handle aggregate constraint metrics like identifying continuous slices that sum to a target $K$ (`SubarraySumEqualsKPrefixSum`), we combine the cumulative total with a frequency tracking `HashMap`. 
 * **The Identity Formula**: As we traverse, we evaluate `targetLookback = currentSum - k`. Checking our history map for this key in $O(1)$ reveals whether a matching subset slice can be terminated at our current index.
 * **Cardially Frequency Jumps**: The tracking map maps `[PrefixSum -> Cumulative Frequency Counts]`. Seeding the map with `(0, 1)` establishes the baseline state before processing elements. If zeros or canceling negative numbers appear, the same cumulative total repeats in history. When looking back, adding the historical frequency value (`count += prefixSumMap.get(targetLookback)`) allows our tracking variable to scale cleanly past multiple structural starting blocks in a single operation.
 
 #### **Prefix / Suffix Product Splitting**
-When space constraints rule out auxiliary storage arrays and structural limits ban division operators entirely (e.g., `ProductExceptSelf`), calculations must leverage independent direction passes. The target index configuration is mathematically split into isolated components: the cumulative multiplication of everything to the left (Prefix) combined with everything to the right (Suffix). Passing sequentially forward constructs the baseline prefix states inside the mandatory output layout, while an inverted backward pass scales the existing records via a primitive suffix accumulator tracker, achieving $O(N)$ execution inside a strict $O(1)$ space
+When space constraints rule out auxiliary storage arrays and structural limits ban division operators entirely (e.g., `ProductExceptSelf`), calculations must leverage independent direction passes. The target index configuration is mathematically split into isolated components: the cumulative multiplication of everything to the left (Prefix) combined with everything to the right (Suffix). Passing sequentially forward constructs the baseline prefix states inside the mandatory output layout, while an inverted backward pass scales the existing records via a primitive suffix accumulator tracker, achieving $O(N)$ execution inside a strict $O(1)$ space environment.
+
+### 5. Monotonic Stacks (Eviction Mechanics & Dynamic Trends)
+Used to reduce quadratic nested boundary scans $O(N^2)$ into single-pass linear time $O(N)$ by keeping data structured in a strict, sorting trend (strictly increasing or decreasing from bottom to top).
+
+#### **The Eviction Discovery Moment**
+Instead of scanning forward into an unknown future, elements sit waiting inside a safe tracking stack. The arrival of an incoming element that breaks the sorted invariant triggers a `while` loop chain-reaction. This eviction loop pop is highly informative: the breaking item is confirmed as the immediate **"Next Greater Element"** (or Next Smaller Element) for all evicted indices simultaneously.
+
+#### **Pointer Mapping vs Ledger Resolution**
+* **Value ledgers**: In standard scenarios mapping strict subset lookups (`NextGreaterElementMonotonicStack`), a `HashMap` can be used to capture raw `[Popped Value -> Evicting Value]` associations.
+* **Direct index mapping**: To support duplicate input numbers or direct output arrays (`NextGreaterElementIIMonotonicStack`), the stack must store array indices instead of raw values. Evicted elements are directly assigned in-place via `result[poppedIndex] = currentNum`, completely removing extra hash mapping allocations.
+
+#### **Circular Boundaries & Temporal Spans**
+* **Virtual array duplication**: Circular coordinate paths are handled smoothly without allocating large duplicated buffers. Running the outer loop up to `2 * N - 1` and evaluating bounds via modulo partitioning (`i % N`) lets unmapped trailing elements safely wrap around to evaluate historical headers.
+* **Temporal distance calculation**: For tracking interval spans or delay thresholds (`DailyTempMonotonicStack`), indexing structures evaluate distance dynamically during eviction. The difference between timelines (`i - poppedIndex`) immediately establishes the metric interval without looking up downstream array ranges.
+
+---
+
+## 📉 Architect's Complexity Cheat Sheet
+
+| Category | Operation / Pattern | Time Complexity | Space Complexity | Best Use Case |
+| :--- | :--- | :--- | :--- | :--- |
+| **Cycle Detection**| Fast & Slow | $O(N)$ | $O(1)$ | Circular verification / Infinite loops |
+| **Find Middle** | Fast & Slow | $O(N)$ | $O(1)$ | Merge Sort splits on Linked lists |
+| **Fixed Range** | Sliding Window (Fixed) | $O(N)$ | $O(1)$ / $O(K)$ | Moving metrics / Anagram tracking |
+| **Dynamic Range**| Sliding Window (Variable) | $O(N)$ | $O(1)$ | Shortest/Longest bounds search |
+| **Range Queries** | Prefix Sums | $O(1)$ (Post-compute)| $O(N)$ | Immutable range total operations |
+| **Nearest Trend** | Monotonic Stack | $O(N)$ | $O(N)$ | Finding structural spikes or drops |
+| **Scheduling** | Merge Intervals | $O(N \log N)$ | $O(N)$ or $O(1)$ | Consolidating overlaps / Calendering |
+| **Coordinate Grid**| Matrix Traversal | $O(M \times N)$ | $O(1)$ | Spiral loops / Layered image processing |
+| **Dynamic Array** | Access | $O(1)$ | $O(1)$ | Fast random retrieval |
+| **Stack** | Push / Pop | $O(1)$ | $O(1)$ | LIFO tracking / Undo-Redo engines |
+
+---
+
+## 📁 Repository Structure
+
+```text
+DSAWithOnlineAssessments/
+├── .github/workflows/  # CI/CD pipelines (GitHub Actions)
+├── src/main/java/com/prabodh/
+│   ├── ds/             # Custom implementations (The "Build")
+│   ├── patterns/       # Algorithmic logic (The "Analyze")
+│   └── challenges/     # LeetCode/OA Practice (The "Apply")
+└── src/test/java/com/prabodh/
