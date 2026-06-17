@@ -30,7 +30,7 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 | **Prefix Sums** | ✅ Built | Precomputing cumulative running metrics to answer range queries in constant time. | `RangeSumQueryPrefixSum`, `SubarraySumEqualsKPrefixSum`, `ProductExceptSelf` |
 | **Monotonic Stack** | ✅ Built | Enforcing a strict directional sort order inside a stack frame to map nearest properties. | `NextGreaterElementMonotonicStack`, `NextGreaterElementIIMonotonicStack`, `DailyTempMonotonicStack` |
 | **Merge Intervals** | ✅ Built | Sorting and consolidating overlapping coordinates or timeline tracks. | `MergeInterval`, `MergeInterval2`, `MergeNewInterval` |
-| **Matrix Traversal** | ⏳ Pending | Controlling boundary variables to navigate multi-dimensional index coordinates. | - |
+| **Matrix Traversal** | ✅ Built | Controlling boundary variables, directional loops, and structural primitives to transform multi-dimensional grids. | `MatrixTransformer2D`, `Matrix2DSpiral`, `RectangularMatrixRotator` |
 
 ---
 
@@ -111,6 +111,22 @@ When an existing track has zero internal overlaps and comes pre-sorted, introduc
 * **Phase 2 (The Melt Zone)**: As long as existing tracks enter before the new interval finishes (`intervals[i][0] <= newInterval[1]`), their structures touch. They are absorbed completely into the new bounds by evaluating `newInterval[0] = Math.min(...)` and `newInterval[1] = Math.max(...)` across the indices before committing the unified element.
 * **Phase 3 (Post-Buffer Append)**: Drag the tracking pointer through all remaining downstream intervals, shifting them onto the result track directly with no further boundary criteria checks.
 
+### 7. 2D Matrix Traversal (Multi-Dimensional Coordinate Mapping)
+Used to process bounded data tables, image pixel layouts, and geographic coordinate grids by swapping, reflecting, or encapsulating directional index trackers.
+
+#### **Pattern 3A: Linear Scanning & Perimeter Fences**
+Designed to isolate localized row/column tracks by setting explicit boundary walls (`top`, `bottom`, `left`, `right`). Contracting these boundaries immediately inward upon track exhaustion converts raw grid spaces into organized linear arrays without duplicate coordinate evaluations.
+* **Asymmetric Safety Bounds**: On rectangular $M \times N$ layouts, active cross-check conditionals (`if (top <= bottom)` and `if (left <= right)`) must protect backward paths to stop closing walls from duplicate processing.
+
+#### **Pattern 3B: In-Place Diagonal Transformations**
+Achieves pure geometric orientation shifts ($90^\circ, 180^\circ, 270^\circ$) inside existing matrix boundaries without consuming extra memory. Operations are broken down into decoupled atomic primitive layers:
+1. **The In-Place Transpose**: Converts rows to columns across the main diagonal axis. The inner column iteration must strictly bind its starting pointer to the current row index (`c = r`) to exclusively traverse the upper triangle, completely avoiding the double-swap trap that reverts values.
+2. **Horizontal/Vertical Reflections**: Reversing elements within each row buffer independently (Horizontal) or shifting entire row array buffers across matching top/bottom limits (Vertical) anchors the directional compass points. Combining `Transpose + Horizontal Reverse` yields a $90^\circ$ Clockwise rotation, while `Transpose + Vertical Reverse` handles Counter-Clockwise turns.
+
+#### **Pattern 3C: Out-of-Place Rectangular Inversions**
+When rotating a non-square grid ($M \times N$), changing dimensions (e.g., $2 \times 3 \rightarrow 3 \times 2$) makes in-place modifications physically impossible due to fixed array allocation constraints. The layout must be mapped out-of-place into a newly allocated inverted destination block (`new int[cols][rows]`) leveraging an offset-adjusted structural mapping index:
+$$\text{rotated}[c][\text{maxRows} - 1 - r] = \text{matrix}[r][c]$$
+
 ---
 
 ## 📉 Architect's Complexity Cheat Sheet
@@ -124,7 +140,9 @@ When an existing track has zero internal overlaps and comes pre-sorted, introduc
 | **Range Queries** | Prefix Sums | $O(1)$ (Post-compute)| $O(N)$ | Immutable range total operations |
 | **Nearest Trend** | Monotonic Stack | $O(N)$ | $O(N)$ | Finding structural spikes or drops |
 | **Scheduling** | Merge Intervals | $O(N \log N)$ | $O(N)$ or $O(1)$ | Consolidating overlaps / Calendering |
-| **Coordinate Grid**| Matrix Traversal | $O(M \times N)$ | $O(1)$ | Spiral loops / Layered image processing |
+| **Grid Boundary** | Matrix Spiral Fence Run | $O(M \times N)$ | $O(1)$ Amortized | Sequential boundary-enclosed reading |
+| **Square Rotation**| Matrix In-Place Transformation| $O(N^2)$ | $O(1)$ Absolute | In-place $90^\circ/180^\circ$ matrix rotations |
+| **Rect. Rotation** | Matrix Out-of-Place Rotation | $O(M \times N)$ | $O(M \times N)$ | Transforming non-square grids ($M \neq N$) |
 | **Dynamic Array** | Access | $O(1)$ | $O(1)$ | Fast random retrieval |
 | **Stack** | Push / Pop | $O(1)$ | $O(1)$ | LIFO tracking / Undo-Redo engines |
 
