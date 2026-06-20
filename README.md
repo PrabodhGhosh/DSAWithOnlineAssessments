@@ -13,7 +13,7 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 
 ## 🗺 Roadmap & Progress
 
-### 1. Sequential Structures
+### 1. Sequential & Spatial Structures (Linear)
 | Structure | Status | Implementation Notes | Complexity (Amortized) |
 | :--- | :--- | :--- | :--- |
 | **Dynamic Array** | ✅ Built | Doubling resize strategy | Add: $O(1)$ |
@@ -21,7 +21,14 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 | **Stack** | ✅ Built | Array-based (resize) | Push/Pop: $O(1)$ |
 | **Queue** | ✅ Built | Circular Buffer (Modulo math) | Enqueue/Dequeue: $O(1)$ |
 
-### 2. Algorithmic Patterns (OA Strategy)
+### 2. Hierarchical & Non-Linear Structures
+| Structure | Status | Implementation Notes | Complexity (Amortized) |
+| :--- | :--- | :--- | :--- |
+| **Binary Search Tree (BST)** | ⏳ Pending | Custom Node pointer allocation; Left/Right sorting invariants | Search: $O(\log N)$, Insert: $O(\log N)$ |
+| **Custom Hash Map** | ⏳ Pending | Bucket array with separate chaining for collision handling | Put/Get: $O(1)$ |
+| **Graph (Adjacency List)** | ⏳ Pending | Dynamic vertex-to-edge mapping framework for dependency modeling | Add Vertex/Edge: $O(1)$ |
+
+### 3. Algorithmic Patterns (OA Strategy)
 | Pattern | Status | Description | Problems Solved |
 | :--- | :--- | :--- | :--- |
 | **Two Pointers** | ✅ Built | Bi-directional traversal to reduce complexity from $O(N^2)$ to $O(N)$. | `TwoSum II`, `Valid Palindrome` |
@@ -31,6 +38,8 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 | **Monotonic Stack** | ✅ Built | Enforcing a strict directional sort order inside a stack frame to map nearest properties. | `NextGreaterElementMonotonicStack`, `NextGreaterElementIIMonotonicStack`, `DailyTempMonotonicStack` |
 | **Merge Intervals** | ✅ Built | Sorting and consolidating overlapping coordinates or timeline tracks. | `MergeInterval`, `MergeInterval2`, `MergeNewInterval` |
 | **Matrix Traversal** | ✅ Built | Controlling boundary variables, directional loops, and structural primitives to transform multi-dimensional grids. | `MatrixTransformer2D`, `Matrix2DSpiral`, `RectangularMatrixRotator` |
+| **Tree Traversal (DFS/BFS)** | ⏳ Pending | Executing non-linear searches via recursive depth paths and queue-based level sweeps (Crucial for DOM parsing algorithms). | *Placeholders: To be populated* |
+| **State Tracking & Graph Maps** | ⏳ Pending | Utilizing tracking maps and visited tables to trace dependency paths and catch cycle deadlocks. | *Placeholders: To be populated* |
 
 ---
 
@@ -109,7 +118,7 @@ Instead of copying objects or shifting arrays continuously, the consolidation en
 When an existing track has zero internal overlaps and comes pre-sorted, introducing a new range can be processed in strict $O(N)$ runtime without invoking a sorting method. The timeline is split cleanly across sequential tracking loops using an isolation index pointer:
 * **Phase 1 (Pre-Buffer)**: Iteratively pass over and commit all early interval tracks whose end coordinates finish completely before the new interval begins (`intervals[i][1] < newInterval[0]`).
 * **Phase 2 (The Melt Zone)**: As long as existing tracks enter before the new interval finishes (`intervals[i][0] <= newInterval[1]`), their structures touch. They are absorbed completely into the new bounds by evaluating `newInterval[0] = Math.min(...)` and `newInterval[1] = Math.max(...)` across the indices before committing the unified element.
-* **Phase 3 (Post-Buffer Append)**: Drag the tracking pointer through all remaining downstream intervals, shifting them onto the result track directly with no further boundary criteria checks.
+* **Phase 3 (Post-Buffer Append)**: Drag the tracking pointer through all remaining downstream intervals, shifting them onto the result track directly with no further disposable boundary criteria checks.
 
 ### 7. 2D Matrix Traversal (Multi-Dimensional Coordinate Mapping)
 Used to process bounded data tables, image pixel layouts, and geographic coordinate grids by swapping, reflecting, or encapsulating directional index trackers.
@@ -129,6 +138,14 @@ $$\text{rotated}[c][\text{maxRows} - 1 - r] = \text{matrix}[r][c]$$
 
 ---
 
+### 8. Tree Traversal Mechanics (Hierarchical Navigation)
+*Placeholders: Core mental models and parsing mechanics to be populated along the learning journey.*
+
+### 9. State Tracking & Graph Maps (Dependency Architecture)
+*Placeholders: Microservice dependency resolution and verification tracking patterns to be populated along the learning journey.*
+
+---
+
 ## 📉 Architect's Complexity Cheat Sheet
 
 | Category | Operation / Pattern | Time Complexity | Space Complexity | Best Use Case |
@@ -143,6 +160,8 @@ $$\text{rotated}[c][\text{maxRows} - 1 - r] = \text{matrix}[r][c]$$
 | **Grid Boundary** | Matrix Spiral Fence Run | $O(M \times N)$ | $O(1)$ Amortized | Sequential boundary-enclosed reading |
 | **Square Rotation**| Matrix In-Place Transformation| $O(N^2)$ | $O(1)$ Absolute | In-place $90^\circ/180^\circ$ matrix rotations |
 | **Rect. Rotation** | Matrix Out-of-Place Rotation | $O(M \times N)$ | $O(M \times N)$ | Transforming non-square grids ($M \neq N$) |
+| **Tree Search** | Binary Search Tree (BST) | *To Be Populated* | *To Be Populated* | Hierarchical value resolution |
+| **Graph Sweeps** | BFS / DFS Iterations | *To Be Populated* | *To Be Populated* | Trace loops, parsing structural dependencies |
 | **Dynamic Array** | Access | $O(1)$ | $O(1)$ | Fast random retrieval |
 | **Stack** | Push / Pop | $O(1)$ | $O(1)$ | LIFO tracking / Undo-Redo engines |
 
