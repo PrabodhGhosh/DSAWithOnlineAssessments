@@ -24,7 +24,7 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 ### 2. Hierarchical & Non-Linear Structures
 | Structure | Status | Implementation Notes | Complexity (Amortized) |
 | :--- | :--- | :--- | :--- |
-| **Binary Search Tree (BST)** | ⏳ Pending | Custom Node pointer allocation; Left/Right sorting invariants | Search: $O(\log N)$, Insert: $O(\log N)$ |
+| **Binary Search Tree (BST)** | ⚙️ In Progress | Custom Node pointer allocation; Left/Right sorting invariants | Search: *To Be Populated*, Insert: *To Be Populated* |
 | **Custom Hash Map** | ⏳ Pending | Bucket array with separate chaining for collision handling | Put/Get: $O(1)$ |
 | **Graph (Adjacency List)** | ⏳ Pending | Dynamic vertex-to-edge mapping framework for dependency modeling | Add Vertex/Edge: $O(1)$ |
 
@@ -38,7 +38,7 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 | **Monotonic Stack** | ✅ Built | Enforcing a strict directional sort order inside a stack frame to map nearest properties. | `NextGreaterElementMonotonicStack`, `NextGreaterElementIIMonotonicStack`, `DailyTempMonotonicStack` |
 | **Merge Intervals** | ✅ Built | Sorting and consolidating overlapping coordinates or timeline tracks. | `MergeInterval`, `MergeInterval2`, `MergeNewInterval` |
 | **Matrix Traversal** | ✅ Built | Controlling boundary variables, directional loops, and structural primitives to transform multi-dimensional grids. | `MatrixTransformer2D`, `Matrix2DSpiral`, `RectangularMatrixRotator` |
-| **Tree Traversal (DFS/BFS)** | ⏳ Pending | Executing non-linear searches via recursive depth paths and queue-based level sweeps (Crucial for DOM parsing algorithms). | *Placeholders: To be populated* |
+| **Tree Traversal (DFS/BFS)** | ⚙️ In Progress | Executing non-linear searches via recursive depth paths and queue-based level sweeps (Crucial for DOM parsing algorithms). | `TreeMaxDepthDFS` |
 | **State Tracking & Graph Maps** | ⏳ Pending | Utilizing tracking maps and visited tables to trace dependency paths and catch cycle deadlocks. | *Placeholders: To be populated* |
 
 ---
@@ -118,62 +118,3 @@ Instead of copying objects or shifting arrays continuously, the consolidation en
 When an existing track has zero internal overlaps and comes pre-sorted, introducing a new range can be processed in strict $O(N)$ runtime without invoking a sorting method. The timeline is split cleanly across sequential tracking loops using an isolation index pointer:
 * **Phase 1 (Pre-Buffer)**: Iteratively pass over and commit all early interval tracks whose end coordinates finish completely before the new interval begins (`intervals[i][1] < newInterval[0]`).
 * **Phase 2 (The Melt Zone)**: As long as existing tracks enter before the new interval finishes (`intervals[i][0] <= newInterval[1]`), their structures touch. They are absorbed completely into the new bounds by evaluating `newInterval[0] = Math.min(...)` and `newInterval[1] = Math.max(...)` across the indices before committing the unified element.
-* **Phase 3 (Post-Buffer Append)**: Drag the tracking pointer through all remaining downstream intervals, shifting them onto the result track directly with no further disposable boundary criteria checks.
-
-### 7. 2D Matrix Traversal (Multi-Dimensional Coordinate Mapping)
-Used to process bounded data tables, image pixel layouts, and geographic coordinate grids by swapping, reflecting, or encapsulating directional index trackers.
-
-#### **Pattern 3A: Linear Scanning & Perimeter Fences**
-Designed to isolate localized row/column tracks by setting explicit boundary walls (`top`, `bottom`, `left`, `right`). Contracting these boundaries immediately inward upon track exhaustion converts raw grid spaces into organized linear arrays without duplicate coordinate evaluations.
-* **Asymmetric Safety Bounds**: On rectangular $M \times N$ layouts, active cross-check conditionals (`if (top <= bottom)` and `if (left <= right)`) must protect backward paths to stop closing walls from duplicate processing.
-
-#### **Pattern 3B: In-Place Diagonal Transformations**
-Achieves pure geometric orientation shifts ($90^\circ, 180^\circ, 270^\circ$) inside existing matrix boundaries without consuming extra memory. Operations are broken down into decoupled atomic primitive layers:
-1. **The In-Place Transpose**: Converts rows to columns across the main diagonal axis. The inner column iteration must strictly bind its starting pointer to the current row index (`c = r`) to exclusively traverse the upper triangle, completely avoiding the double-swap trap that reverts values.
-2. **Horizontal/Vertical Reflections**: Reversing elements within each row buffer independently (Horizontal) or shifting entire row array buffers across matching top/bottom limits (Vertical) anchors the directional compass points. Combining `Transpose + Horizontal Reverse` yields a $90^\circ$ Clockwise rotation, while `Transpose + Vertical Reverse` handles Counter-Clockwise turns.
-
-#### **Pattern 3C: Out-of-Place Rectangular Inversions**
-When rotating a non-square grid ($M \times N$), changing dimensions (e.g., $2 \times 3 \rightarrow 3 \times 2$) makes in-place modifications physically impossible due to fixed array allocation constraints. The layout must be mapped out-of-place into a newly allocated inverted destination block (`new int[cols][rows]`) leveraging an offset-adjusted structural mapping index:
-$$\text{rotated}[c][\text{maxRows} - 1 - r] = \text{matrix}[r][c]$$
-
----
-
-### 8. Tree Traversal Mechanics (Hierarchical Navigation)
-*Placeholders: Core mental models and parsing mechanics to be populated along the learning journey.*
-
-### 9. State Tracking & Graph Maps (Dependency Architecture)
-*Placeholders: Microservice dependency resolution and verification tracking patterns to be populated along the learning journey.*
-
----
-
-## 📉 Architect's Complexity Cheat Sheet
-
-| Category | Operation / Pattern | Time Complexity | Space Complexity | Best Use Case |
-| :--- | :--- | :--- | :--- | :--- |
-| **Cycle Detection**| Fast & Slow | $O(N)$ | $O(1)$ | Circular verification / Infinite loops |
-| **Find Middle** | Fast & Slow | $O(N)$ | $O(1)$ | Merge Sort splits on Linked lists |
-| **Fixed Range** | Sliding Window (Fixed) | $O(N)$ | $O(1)$ / $O(K)$ | Moving metrics / Anagram tracking |
-| **Dynamic Range**| Sliding Window (Variable) | $O(N)$ | $O(1)$ | Shortest/Longest bounds search |
-| **Range Queries** | Prefix Sums | $O(1)$ (Post-compute)| $O(N)$ | Immutable range total operations |
-| **Nearest Trend** | Monotonic Stack | $O(N)$ | $O(N)$ | Finding structural spikes or drops |
-| **Scheduling** | Merge Intervals | $O(N \log N)$ | $O(N)$ or $O(1)$ | Consolidating overlaps / Calendering |
-| **Grid Boundary** | Matrix Spiral Fence Run | $O(M \times N)$ | $O(1)$ Amortized | Sequential boundary-enclosed reading |
-| **Square Rotation**| Matrix In-Place Transformation| $O(N^2)$ | $O(1)$ Absolute | In-place $90^\circ/180^\circ$ matrix rotations |
-| **Rect. Rotation** | Matrix Out-of-Place Rotation | $O(M \times N)$ | $O(M \times N)$ | Transforming non-square grids ($M \neq N$) |
-| **Tree Search** | Binary Search Tree (BST) | *To Be Populated* | *To Be Populated* | Hierarchical value resolution |
-| **Graph Sweeps** | BFS / DFS Iterations | *To Be Populated* | *To Be Populated* | Trace loops, parsing structural dependencies |
-| **Dynamic Array** | Access | $O(1)$ | $O(1)$ | Fast random retrieval |
-| **Stack** | Push / Pop | $O(1)$ | $O(1)$ | LIFO tracking / Undo-Redo engines |
-
----
-
-## 📁 Repository Structure
-
-```text
-DSAWithOnlineAssessments/
-├── .github/workflows/  # CI/CD pipelines (GitHub Actions)
-├── src/main/java/com/prabodh/
-│   ├── ds/             # Custom implementations (The "Build")
-│   ├── patterns/       # Algorithmic logic (The "Analyze")
-│   └── challenges/     # LeetCode/OA Practice (The "Apply")
-└── src/test/java/com/prabodh/
