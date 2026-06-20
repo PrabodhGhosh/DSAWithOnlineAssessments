@@ -1,4 +1,4 @@
-package com.prabodh.pattern;
+package com.prabodh.pattern.sequential;
 
 import java.util.HashMap;
 import java.util.Map;

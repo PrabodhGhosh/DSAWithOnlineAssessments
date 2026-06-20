@@ -1,4 +1,4 @@
-package com.prabodh.pattern;
+package com.prabodh.pattern.sequential;
 
 public class TwoSumTwoPointer {
 

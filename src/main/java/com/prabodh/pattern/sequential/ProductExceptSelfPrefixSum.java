@@ -1,4 +1,4 @@
-package com.prabodh.pattern;
+package com.prabodh.pattern.sequential;
 
 /**
  * Prefix/Suffix Accumulator Variation: Product of Array Except Self.

@@ -1,4 +1,4 @@
-package com.prabodh.pattern;
+package com.prabodh.pattern.sequential;
 import com.prabodh.ds.sequential.MyLinkedList.Node;
 
 public class LinkedListCycle {
