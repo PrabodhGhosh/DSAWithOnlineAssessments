@@ -38,7 +38,7 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 | **Monotonic Stack** | ✅ Built | Enforcing a strict directional sort order inside a stack frame to map nearest properties. | `NextGreaterElementMonotonicStack`, `NextGreaterElementIIMonotonicStack`, `DailyTempMonotonicStack` |
 | **Merge Intervals** | ✅ Built | Sorting and consolidating overlapping coordinates or timeline tracks. | `MergeInterval`, `MergeInterval2`, `MergeNewInterval` |
 | **Matrix Traversal** | ✅ Built | Controlling boundary variables, directional loops, and structural primitives to transform multi-dimensional grids. | `MatrixTransformer2D`, `Matrix2DSpiral`, `RectangularMatrixRotator` |
-| **Tree Traversal (DFS/BFS)** | ⚙️ In Progress | Executing non-linear searches via recursive depth paths and queue-based level sweeps (Crucial for DOM parsing algorithms). | `TreeMaxDepthDFS`, `TreeInvertDFS`, `TreeSameDFS` |
+| **Tree Traversal (DFS/BFS)** | ✅ Built | Executing non-linear searches via recursive depth paths and queue-based level sweeps (Crucial for DOM parsing algorithms). | `TreeMaxDepthDFS`, `TreeInvertDFS`, `TreeSameDFS`, `TreeLevelOrderBFS`, `TreeRightSideViewBFS`, `TreeLeftSideViewBFS` |
 | **State Tracking & Graph Maps** | ⏳ Pending | Utilizing tracking maps and visited tables to trace dependency paths and catch cycle deadlocks. | *Placeholders: To be populated* |
 
 ---
@@ -138,16 +138,27 @@ $$\text{rotated}[c][\text{maxRows} - 1 - r] = \text{matrix}[r][c]$$
 ---
 
 ### 8. Tree Traversal Mechanics (Hierarchical Navigation)
-Depth-First Search (DFS) patterns use the internal runtime Call Stack via recursion to plunge deep into tree structures. To write bug-free DFS logic under assessment conditions without tracking pointer assignment boilerplate, solutions follow a strict, decoupled **3-Step Structural Architecture**:
+Tree traversal involves navigating non-linear, branching memory networks. Under live Online Assessment pressure, complex problems collapse easily when split into either vertical (DFS) or horizontal (BFS) execution models.
 
-#### **The 3-Step DFS Engine Blueprint**
-1. **The Base Case (The Escape Hatch)**: The absolute boundary layer checking for `null` pointer inputs. This handles structural limits and stops stack pollution before evaluating children or properties.
-    * *Example*: `if (root == null) return fallback;`
-2. **The Core Logic / Functionality Layer**: The targeted mutation, validation, or metric calculation zone. This acts explicitly on values (`node.val`) or structure within the current active frame.
-    * *Inversion (LeetCode 226)*: Swapping reference paths using a temporary holder variable (`TreeNode temp = root.left; root.left = root.right; root.right = temp;`).
-    * *Identity Verification (LeetCode 100)*: Confirming absolute match criteria (`if (p.val != q.val) return false;`).
-3. **The Recursive Call (Passing the Baton)**: Branching execution paths deeper into the tree structure. Calls are issued downward into left and right sub-properties (`node.left`, `node.right`), splitting complex hierarchies into isolated atomic evaluations.
-    * *Aggregation*: Combining boolean validation gates via short-circuit checks (`return isSameTree(p.left, q.left) && isSameTree(p.right, q.right)`).
+#### **Pattern 8A: Depth-First Search (DFS / Vertical Plunge)**
+DFS leverages the internal runtime **Call Stack** via recursion to plunge down a single track until it reaches a dead end, processing elements deeply before backtracking. Bug-free node manipulation is achieved by organizing logic into a strict **3-Step DFS Engine Architecture**:
+
+1. **The Base Case (The Escape Hatch)**: The critical boundary guard checking for `null` pointer targets. This stops further descent and shields subsequent layers from throwing fatal `NullPointerException` errors.
+   * *Example*: `if (root == null) return null;`
+2. **The Core Logic / Functionality Layer**: The precise point where data is analyzed, updated, or validated within the active node frame.
+   * *Inversion (LeetCode 226)*: Swapping child reference paths with a temporary pointer holder variable (`TreeNode temp = root.left; root.left = root.right; root.right = temp;`).
+   * *Identity Verification (LeetCode 100)*: Running an immediate equality check on primitive values (`if (p.val != q.val) return false;`).
+3. **The Recursive Call (Passing the Baton)**: Branching execution paths further into the left and right downward hierarchies (`node.left`, `node.right`). The final result is assembled by merging the booleans or metrics returned from both sub-trees.
+   * *Combination Check*: `return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);`
+
+#### **Pattern 8B: Breadth-First Search (BFS / Level-Order Traversal)**
+Unlike DFS, BFS sweeps horizontally across each tier layout. Because it cannot track horizons implicitly using recursion, it establishes structural layer fences using an explicit **FIFO Queue** runway.
+
+##### **The 3-Step BFS Level-Isolation Framework**
+1. **Conveyor Seed**: Initialize an explicit `Queue<TreeNode>` container and push the root node onto the track to act as the baseline horizon anchor.
+2. **Horizon Snapshotting**: Encapsulate processing within a `while (!queue.isEmpty())` loop. At the immediate entry point of each layer sequence, freeze the queue's boundary footprint via `int levelSize = queue.size();`. This snapshots precisely how many nodes occupy the current horizontal tier, insulating the loop calculation from downstream child elements accumulating in the back of the queue.
+3. **Flush and Queue Cycles**: Execute an isolated `for` loop exactly `levelSize` times. Extract the front node via `queue.poll()`, log its value, and push its valid left and right children into the back of the queue to stage the subsequent tier horizon.
+   * *Perspective Modification (LeetCode 199)*: Adding horizontal perspective metrics becomes simple by checking index coordinates during the flush cycle. Capturing the node when `i == levelSize - 1` isolates the **Right Side View**, whereas matching `i == 0` captures the **Left Side View**.
 
 ---
 
@@ -170,8 +181,8 @@ Depth-First Search (DFS) patterns use the internal runtime Call Stack via recurs
 | **Grid Boundary** | Matrix Spiral Fence Run | $O(M \times N)$ | $O(1)$ Amortized | Sequential boundary-enclosed reading |
 | **Square Rotation**| Matrix In-Place Transformation| $O(N^2)$ | $O(1)$ Absolute | In-place $90^\circ/180^\circ$ matrix rotations |
 | **Rect. Rotation** | Matrix Out-of-Place Rotation | $O(M \times N)$ | $O(M \times N)$ | Transforming non-square grids ($M \neq N$) |
-| **Tree Search** | Binary Search Tree (BST) | *To Be Populated* | *To Be Populated* | Hierarchical value resolution |
-| **Graph Sweeps** | BFS / DFS Iterations | $O(N)$ | $O(H)$ amortized | Trace loops, parsing structural dependencies |
+| **Tree Traversal**| Depth-First Search (DFS) | $O(N)$ | $O(H)$ Call Stack | Deep path verification / Hierarchical mutations |
+| **Tree Traversal**| Breadth-First Search (BFS) | $O(N)$ | $O(W)$ FIFO Queue | Level grouping / Horizontal layer perspective views |
 | **Dynamic Array** | Access | $O(1)$ | $O(1)$ | Fast random retrieval |
 | **Stack** | Push / Pop | $O(1)$ | $O(1)$ | LIFO tracking / Undo-Redo engines |
 
