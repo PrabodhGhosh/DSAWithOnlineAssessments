@@ -24,7 +24,7 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 ### 2. Hierarchical & Non-Linear Structures
 | Structure | Status | Implementation Notes | Complexity (Amortized) |
 | :--- | :--- | :--- | :--- |
-| **Binary Search Tree (BST)** | ⚙️ In Progress | Custom Node pointer allocation; Left/Right sorting invariants | Search: *To Be Populated*, Insert: *To Be Populated* |
+| **Binary Search Tree (BST)** | ✅ Built | Custom Node pointer allocation; Left/Right sorting invariants | Search: $O(\log N)$, Insert: $O(\log N)$ |
 | **Custom Hash Map** | ⏳ Pending | Bucket array with separate chaining for collision handling | Put/Get: $O(1)$ |
 | **Graph (Adjacency List)** | ⏳ Pending | Dynamic vertex-to-edge mapping framework for dependency modeling | Add Vertex/Edge: $O(1)$ |
 
