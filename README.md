@@ -25,7 +25,7 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 | Structure | Status | Implementation Notes | Complexity (Amortized) |
 | :--- | :--- | :--- | :--- |
 | **Binary Search Tree (BST)** | ✅ Built | Custom Node pointer allocation; Left/Right sorting invariants | Search: $O(\log N)$, Insert: $O(\log N)$ |
-| **Custom Hash Map** | ⏳ Pending | Bucket array with separate chaining for collision handling | Put/Get: $O(1)$ |
+| **Custom Hash Map** | ✅ Built | Bucket array with separate chaining for collision handling | Put/Get: $O(1)$ |
 | **Graph (Adjacency List)** | ⏳ Pending | Dynamic vertex-to-edge mapping framework for dependency modeling | Add Vertex/Edge: $O(1)$ |
 
 ### 3. Algorithmic Patterns (OA Strategy)
@@ -39,7 +39,7 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 | **Merge Intervals** | ✅ Built | Sorting and consolidating overlapping coordinates or timeline tracks. | `MergeInterval`, `MergeInterval2`, `MergeNewInterval` |
 | **Matrix Traversal** | ✅ Built | Controlling boundary variables, directional loops, and structural primitives to transform multi-dimensional grids. | `MatrixTransformer2D`, `Matrix2DSpiral`, `RectangularMatrixRotator` |
 | **Tree Traversal (DFS/BFS)** | ✅ Built | Executing non-linear searches via recursive depth paths and queue-based level sweeps (Crucial for DOM parsing algorithms). | `TreeMaxDepthDFS`, `TreeInvertDFS`, `TreeSameDFS`, `TreeLevelOrderBFS`, `TreeRightSideViewBFS`, `TreeLeftSideViewBFS` |
-| **State Tracking & Graph Maps** | ⏳ Pending | Utilizing tracking maps and visited tables to trace dependency paths and catch cycle deadlocks. | *Placeholders: To be populated* |
+| **State Tracking & Graph Maps** | ✅ Built | Utilizing tracking maps and identity tables to trace structural footprints, signatures, and catch cycle deadlocks. | `GroupAnagramsPattern`, `IsomorphicStringsPattern` |
 
 ---
 
@@ -162,8 +162,16 @@ Unlike DFS, BFS sweeps horizontally across each tier layout. Because it cannot t
 
 ---
 
-### 9. State Tracking & Graph Maps (Dependency Architecture)
-*Placeholders: Microservice dependency resolution and verification tracking patterns to be populated along the learning journey.*
+### 9. State Tracking & Identity Mapping (The Footprint Ledger)
+State tracking transforms a standard `HashMap` into a historical fingerprint recorder. Instead of evaluating elements sequentially in nested loop structures, this pattern computes structural keys or counters to record structural trends or configurations in a single lookback.
+
+#### **Pattern 9A: Sorted Structural Keys (Identity Signature Generation)**
+When group sorting or identity classification requires handling anagram variations (`GroupAnagramsPattern`), individual inputs are reduced to a stable, sorted foundational key. Sorting incoming data frames transforms non-linear variations into a unique identical string.
+* **Mechanics**: Capture the incoming word string, decouple it into a primitive array layout (`char[]`), and sort it alphabetically using an $O(K \log K)$ sorting method. Using this transformed layout as a map lookup key maps all future scrambled string combinations to the same group list bucket in $O(1)$ lookback time.
+
+#### **Pattern 9B: Dual-Mapping Tracking Systems (Mutual Synchronization)**
+When validating multi-sequence structural mappings or strict 1-to-1 matching rules (`IsomorphicStringsPattern`), a single directional mapping lookup leaves blind spots that allow multi-set collisions.
+* **The Cross-Claim Protection Trick**: Instantiate two independent, concurrent tracking tables: `mapST` and `mapTS`. As elements clear the iteration loops, cross-examine both channels simultaneously: check if the active index character has been bound to a different target, and evaluate whether the destination item has been preemptively claimed by another origin. Only execute data commits if both lookbacks confirm clear paths, enforcing strict structural synchronicity across separate datasets.
 
 ---
 
@@ -183,6 +191,8 @@ Unlike DFS, BFS sweeps horizontally across each tier layout. Because it cannot t
 | **Rect. Rotation** | Matrix Out-of-Place Rotation | $O(M \times N)$ | $O(M \times N)$ | Transforming non-square grids ($M \neq N$) |
 | **Tree Traversal**| Depth-First Search (DFS) | $O(N)$ | $O(H)$ Call Stack | Deep path verification / Hierarchical mutations |
 | **Tree Traversal**| Breadth-First Search (BFS) | $O(N)$ | $O(W)$ FIFO Queue | Level grouping / Horizontal layer perspective views |
+| **State Tracking**| Sorted Identity Keys | $O(N \cdot K \log K)$ | $O(N \cdot K)$ | Grouping anagrams / Clustering text footprints |
+| **State Tracking**| Dual-Mapping Verification | $O(N)$ | $O(N)$ Amortized | Validating structural isomorphisms / Cipher matching |
 | **Dynamic Array** | Access | $O(1)$ | $O(1)$ | Fast random retrieval |
 | **Stack** | Push / Pop | $O(1)$ | $O(1)$ | LIFO tracking / Undo-Redo engines |
 
