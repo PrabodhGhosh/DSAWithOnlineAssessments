@@ -26,7 +26,7 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 | :--- | :--- | :--- | :--- |
 | **Binary Search Tree (BST)** | ✅ Built | Custom Node pointer allocation; Left/Right sorting invariants | Search: $O(\log N)$, Insert: $O(\log N)$ |
 | **Custom Hash Map** | ✅ Built | Bucket array with separate chaining for collision handling | Put/Get: $O(1)$ |
-| **Graph (Adjacency List)** | ⏳ Pending | Dynamic vertex-to-edge mapping framework for dependency modeling | Add Vertex/Edge: $O(1)$ |
+| **Graph (Adjacency List)** | ✅ Built | Fixed-size array (`Edge[]`) holding passive, memory-linked chain links for explicit vertex tracking | Add Vertex/Edge: $O(1)$ |
 
 ### 3. Algorithmic Patterns (OA Strategy)
 | Pattern | Status | Description | Problems Solved |
@@ -40,6 +40,7 @@ I approach every topic using a three-stage loop to ensure depth of understanding
 | **Matrix Traversal** | ✅ Built | Controlling boundary variables, directional loops, and structural primitives to transform multi-dimensional grids. | `MatrixTransformer2D`, `Matrix2DSpiral`, `RectangularMatrixRotator` |
 | **Tree Traversal (DFS/BFS)** | ✅ Built | Executing non-linear searches via recursive depth paths and queue-based level sweeps (Crucial for DOM parsing algorithms). | `TreeMaxDepthDFS`, `TreeInvertDFS`, `TreeSameDFS`, `TreeLevelOrderBFS`, `TreeRightSideViewBFS`, `TreeLeftSideViewBFS` |
 | **State Tracking & Graph Maps** | ✅ Built | Utilizing tracking maps and identity tables to trace structural footprints, signatures, and catch cycle deadlocks. | `GroupAnagramsPattern`, `IsomorphicStringsPattern` |
+| **Graph Pathfinding & Sub-Patterns** | ✅ Built | Navigating structural networks via call-stack plunges and queue level-sweeps; isolating component groups and grids. | `GraphPathExistsDFS`, `GraphPathExistsBFS`, `NumberOfIslands`, `NumberOfProvinces`, `CourseSchedule` |
 
 ---
 
@@ -83,128 +84,4 @@ By converting an input array into a cumulative running total layout of size `N +
 
 #### **Historical State Lookbacks (The Map Integration)**
 When a linear layout includes zero or negative values, dynamic sliding bounds break. To handle aggregate constraint metrics like identifying continuous slices that sum to a target $K$ (`SubarraySumEqualsKPrefixSum`), we combine the cumulative total with a frequency tracking `HashMap`.
-* **The Identity Formula**: As we traverse, we evaluate `targetLookback = currentSum - k`. Checking our history map for this key in $O(1)$ reveals whether a matching subset slice can be terminated at our current index.
-* **Cardially Frequency Jumps**: The tracking map maps `[PrefixSum -> Cumulative Frequency Counts]`. Seeding the map with `(0, 1)` establishes the baseline state before processing elements. If zeros or canceling negative numbers appear, the same cumulative total repeats in history. When looking back, adding the historical frequency value (`count += prefixSumMap.get(targetLookback)`) allows our tracking variable to scale cleanly past multiple structural starting blocks in a single operation.
-
-#### **Prefix / Suffix Product Splitting**
-When space constraints rule out auxiliary storage arrays and structural limits ban division operators entirely (e.g., `ProductExceptSelf`), calculations must leverage independent direction passes. The target index configuration is mathematically split into isolated components: the cumulative multiplication of everything to the left (Prefix) combined with everything to the right (Suffix). Passing sequentially forward constructs the baseline prefix states inside the mandatory output layout, while an inverted backward pass scales the existing records via a primitive suffix accumulator tracker, achieving $O(N)$ execution inside a strict $O(1)$ space environment.
-
-### 5. Monotonic Stacks (Eviction Mechanics & Dynamic Trends)
-Used to reduce quadratic nested boundary scans $O(N^2)$ into single-pass linear time $O(N)$ by keeping data structured in a strict, sorting trend (strictly increasing or decreasing from bottom to top).
-
-#### **The Eviction Discovery Moment**
-Instead of scanning forward into an unknown future, elements sit waiting inside a safe tracking stack. The arrival of an incoming element that breaks the sorted invariant triggers a `while` loop chain-reaction. This eviction loop pop is highly informative: the breaking item is confirmed as the immediate **"Next Greater Element"** (or Next Smaller Element) for all evicted indices simultaneously.
-
-#### **Pointer Mapping vs Ledger Resolution**
-* **Value ledgers**: In standard scenarios mapping strict subset lookups (`NextGreaterElementMonotonicStack`), a `HashMap` can be used to capture raw `[Popped Value -> Evicting Value]` associations.
-* **Direct index mapping**: To support duplicate input numbers or direct output arrays (`NextGreaterElementIIMonotonicStack`), the stack must store array indices instead of raw values. Evicted elements are directly assigned in-place via `result[poppedIndex] = currentNum`, completely removing extra hash mapping allocations.
-
-#### **Circular Boundaries & Temporal Spans**
-* **Virtual array duplication**: Circular coordinate paths are handled smoothly without allocating large duplicated buffers. Running the outer loop up to `2 * N - 1` and evaluating bounds via modulo partitioning (`i % N`) lets unmapped trailing elements safely wrap around to evaluate historical headers.
-* **Temporal distance calculation**: For tracking interval spans or delay thresholds (`DailyTempMonotonicStack`), indexing structures evaluate distance dynamically during eviction. The difference between timelines (`i - poppedIndex`) immediately establishes the metric interval without looking up downstream array ranges.
-
-### 6. Merge Intervals (Chronological Alignment & Boundary Consolidation)
-Used to collapse overlapping coordinate spans, calendar logs, or resource timelines into an optimized, unified continuity layout.
-
-#### **Upfront Sorting Invariant**
-To prevent a nested $O(N^2)$ tracking cross-check between randomized spans, intervals are snapped cleanly to a left boundary anchor. Sorting coordinates by their start index position (`intervals[i][0]`) via an $O(N \log N)$ pre-computation lambda turns multi-layered conflict processing into a sequential, single-pass linear execution loop ($O(N)$).
-
-#### **Active Reference Exploitation**
-Instead of copying objects or shifting arrays continuously, the consolidation engine relies on primitive heap mutations in-place. Seeding a tracking collection with the baseline boundary block pointer (`currentClip = intervals[0]`) links its memory reference directly into the output chain. As the linear index loop moves rightward:
-* **The Overlap Intersection**: If `nextClip.start <= currentClip.end`, a coordinate collision occurs. The right tracker edge stretches instantly via a maximum boundary selection: `currentClip.end = Math.max(currentClip.end, nextClip.end)`.
-* **The Disjoint Gap**: If `nextClip.start > currentClip.end`, a distinct structural pocket of space occurs. The reference engine shifts focus entirely, pointing the active window tracker at the new block (`currentClip = nextClip`) and sliding it into the result collection as a new baseline track.
-
-#### **Pre-Sorted 3-Phase Partitioning**
-When an existing track has zero internal overlaps and comes pre-sorted, introducing a new range can be processed in strict $O(N)$ runtime without invoking a sorting method. The timeline is split cleanly across sequential tracking loops using an isolation index pointer:
-* **Phase 1 (Pre-Buffer)**: Iteratively pass over and commit all early interval tracks whose end coordinates finish completely before the new interval begins (`intervals[i][1] < newInterval[0]`).
-* **Phase 2 (The Melt Zone)**: As long as existing tracks enter before the new interval finishes (`intervals[i][0] <= newInterval[1]`), their structures touch. They are absorbed completely into the new bounds by evaluating `newInterval[0] = Math.min(...)` and `newInterval[1] = Math.max(...)` across the indices before committing the unified element.
-
-### 7. 2D Matrix Traversal (Multi-Dimensional Coordinate Mapping)
-Used to process bounded data tables, image pixel layouts, and geographic coordinate grids by swapping, reflecting, or encapsulating directional index trackers.
-
-#### **Pattern 3A: Linear Scanning & Perimeter Fences**
-Designed to isolate localized row/column tracks by setting explicit boundary walls (`top`, `bottom`, `left`, `right`). Contracting these boundaries immediately inward upon track exhaustion converts raw grid spaces into organized linear arrays without duplicate coordinate evaluations.
-* **Asymmetric Safety Bounds**: On rectangular $M \times N$ layouts, active cross-check conditionals (`if (top <= bottom)` and `if (left <= right)`) must protect backward paths to stop closing walls from duplicate processing.
-
-#### **Pattern 3B: In-Place Diagonal Transformations**
-Achieves pure geometric orientation shifts ($90^\circ, 180^\circ, 270^\circ$) inside existing matrix boundaries without consuming extra memory. Operations are broken down into decoupled atomic primitive layers:
-1. **The In-Place Transpose**: Converts rows to columns across the main diagonal axis. The inner column iteration must strictly bind its starting pointer to the current row index (`c = r`) to exclusively traverse the upper triangle, completely avoiding the double-swap trap that reverts values.
-2. **Horizontal/Vertical Reflections**: Reversing elements within each row buffer independently (Horizontal) or shifting entire row array buffers across matching top/bottom limits (Vertical) anchors the directional compass points. Combining `Transpose + Horizontal Reverse` yields a $90^\circ$ Clockwise rotation, while `Transpose + Vertical Reverse` handles Counter-Clockwise turns.
-
-#### **Pattern 3C: Out-of-Place Rectangular Inversions**
-When rotating a non-square grid ($M \times N$), changing dimensions (e.g., $2 \times 3 \rightarrow 3 \times 2$) makes in-place modifications physically impossible due to fixed array allocation constraints. The layout must be mapped out-of-place into a newly allocated inverted destination block (`new int[cols][rows]`) leveraging an offset-adjusted structural mapping index:
-$$\text{rotated}[c][\text{maxRows} - 1 - r] = \text{matrix}[r][c]$$
-
----
-
-### 8. Tree Traversal Mechanics (Hierarchical Navigation)
-Tree traversal involves navigating non-linear, branching memory networks. Under live Online Assessment pressure, complex problems collapse easily when split into either vertical (DFS) or horizontal (BFS) execution models.
-
-#### **Pattern 8A: Depth-First Search (DFS / Vertical Plunge)**
-DFS leverages the internal runtime **Call Stack** via recursion to plunge down a single track until it reaches a dead end, processing elements deeply before backtracking. Bug-free node manipulation is achieved by organizing logic into a strict **3-Step DFS Engine Architecture**:
-
-1. **The Base Case (The Escape Hatch)**: The critical boundary guard checking for `null` pointer targets. This stops further descent and shields subsequent layers from throwing fatal `NullPointerException` errors.
-   * *Example*: `if (root == null) return null;`
-2. **The Core Logic / Functionality Layer**: The precise point where data is analyzed, updated, or validated within the active node frame.
-   * *Inversion (LeetCode 226)*: Swapping child reference paths with a temporary pointer holder variable (`TreeNode temp = root.left; root.left = root.right; root.right = temp;`).
-   * *Identity Verification (LeetCode 100)*: Running an immediate equality check on primitive values (`if (p.val != q.val) return false;`).
-3. **The Recursive Call (Passing the Baton)**: Branching execution paths further into the left and right downward hierarchies (`node.left`, `node.right`). The final result is assembled by merging the booleans or metrics returned from both sub-trees.
-   * *Combination Check*: `return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);`
-
-#### **Pattern 8B: Breadth-First Search (BFS / Level-Order Traversal)**
-Unlike DFS, BFS sweeps horizontally across each tier layout. Because it cannot track horizons implicitly using recursion, it establishes structural layer fences using an explicit **FIFO Queue** runway.
-
-##### **The 3-Step BFS Level-Isolation Framework**
-1. **Conveyor Seed**: Initialize an explicit `Queue<TreeNode>` container and push the root node onto the track to act as the baseline horizon anchor.
-2. **Horizon Snapshotting**: Encapsulate processing within a `while (!queue.isEmpty())` loop. At the immediate entry point of each layer sequence, freeze the queue's boundary footprint via `int levelSize = queue.size();`. This snapshots precisely how many nodes occupy the current horizontal tier, insulating the loop calculation from downstream child elements accumulating in the back of the queue.
-3. **Flush and Queue Cycles**: Execute an isolated `for` loop exactly `levelSize` times. Extract the front node via `queue.poll()`, log its value, and push its valid left and right children into the back of the queue to stage the subsequent tier horizon.
-   * *Perspective Modification (LeetCode 199)*: Adding horizontal perspective metrics becomes simple by checking index coordinates during the flush cycle. Capturing the node when `i == levelSize - 1` isolates the **Right Side View**, whereas matching `i == 0` captures the **Left Side View**.
-
----
-
-### 9. State Tracking & Identity Mapping (The Footprint Ledger)
-State tracking transforms a standard `HashMap` into a historical fingerprint recorder. Instead of evaluating elements sequentially in nested loop structures, this pattern computes structural keys or counters to record structural trends or configurations in a single lookback.
-
-#### **Pattern 9A: Sorted Structural Keys (Identity Signature Generation)**
-When group sorting or identity classification requires handling anagram variations (`GroupAnagramsPattern`), individual inputs are reduced to a stable, sorted foundational key. Sorting incoming data frames transforms non-linear variations into a unique identical string.
-* **Mechanics**: Capture the incoming word string, decouple it into a primitive array layout (`char[]`), and sort it alphabetically using an $O(K \log K)$ sorting method. Using this transformed layout as a map lookup key maps all future scrambled string combinations to the same group list bucket in $O(1)$ lookback time.
-
-#### **Pattern 9B: Dual-Mapping Tracking Systems (Mutual Synchronization)**
-When validating multi-sequence structural mappings or strict 1-to-1 matching rules (`IsomorphicStringsPattern`), a single directional mapping lookup leaves blind spots that allow multi-set collisions.
-* **The Cross-Claim Protection Trick**: Instantiate two independent, concurrent tracking tables: `mapST` and `mapTS`. As elements clear the iteration loops, cross-examine both channels simultaneously: check if the active index character has been bound to a different target, and evaluate whether the destination item has been preemptively claimed by another origin. Only execute data commits if both lookbacks confirm clear paths, enforcing strict structural synchronicity across separate datasets.
-
----
-
-## 📉 Architect's Complexity Cheat Sheet
-
-| Category | Operation / Pattern | Time Complexity | Space Complexity | Best Use Case |
-| :--- | :--- | :--- | :--- | :--- |
-| **Cycle Detection**| Fast & Slow | $O(N)$ | $O(1)$ | Circular verification / Infinite loops |
-| **Find Middle** | Fast & Slow | $O(N)$ | $O(1)$ | Merge Sort splits on Linked lists |
-| **Fixed Range** | Sliding Window (Fixed) | $O(N)$ | $O(1)$ / $O(K)$ | Moving metrics / Anagram tracking |
-| **Dynamic Range**| Sliding Window (Variable) | $O(N)$ | $O(1)$ | Shortest/Longest bounds search |
-| **Range Queries** | Prefix Sums | $O(1)$ (Post-compute)| $O(N)$ | Immutable range total operations |
-| **Nearest Trend** | Monotonic Stack | $O(N)$ | $O(N)$ | Finding structural spikes or drops |
-| **Scheduling** | Merge Intervals | $O(N \log N)$ | $O(N)$ or $O(1)$ | Consolidating overlaps / Calendering |
-| **Grid Boundary** | Matrix Spiral Fence Run | $O(M \times N)$ | $O(1)$ Amortized | Sequential boundary-enclosed reading |
-| **Square Rotation**| Matrix In-Place Transformation| $O(N^2)$ | $O(1)$ Absolute | In-place $90^\circ/180^\circ$ matrix rotations |
-| **Rect. Rotation** | Matrix Out-of-Place Rotation | $O(M \times N)$ | $O(M \times N)$ | Transforming non-square grids ($M \neq N$) |
-| **Tree Traversal**| Depth-First Search (DFS) | $O(N)$ | $O(H)$ Call Stack | Deep path verification / Hierarchical mutations |
-| **Tree Traversal**| Breadth-First Search (BFS) | $O(N)$ | $O(W)$ FIFO Queue | Level grouping / Horizontal layer perspective views |
-| **State Tracking**| Sorted Identity Keys | $O(N \cdot K \log K)$ | $O(N \cdot K)$ | Grouping anagrams / Clustering text footprints |
-| **State Tracking**| Dual-Mapping Verification | $O(N)$ | $O(N)$ Amortized | Validating structural isomorphisms / Cipher matching |
-| **Dynamic Array** | Access | $O(1)$ | $O(1)$ | Fast random retrieval |
-| **Stack** | Push / Pop | $O(1)$ | $O(1)$ | LIFO tracking / Undo-Redo engines |
-
----
-
-## 📁 Repository Structure
-
-```text
-DSAWithOnlineAssessments/
-├── .github/workflows/  # CI/CD pipelines (GitHub Actions)
-├── src/main/java/com/prabodh/
-│   ├── ds/             # Custom implementations (The "Build")
-│   ├── patterns/       # Algorithmic logic (The "Analyze")
-│   └── challenges/     # LeetCode/OA Practice (The "Apply")
-└── src/test/java/com/prabodh/
+* **
